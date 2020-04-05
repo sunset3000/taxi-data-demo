@@ -1,0 +1,121 @@
+{
+    "DatabaseName": "green__tripdata_staging",
+    "TableInput": {
+        "Name": "stagingyellow_tripdata_2015_01_csv",
+        "Description": "",
+        "Retention": 0,
+        "StorageDescriptor": {
+            "Columns": [
+                {
+                    "Name": "vendorid",
+                    "Type": "bigint"
+                },
+                {
+                    "Name": "tpep_pickup_datetime",
+                    "Type": "string"
+                },
+                {
+                    "Name": "tpep_dropoff_datetime",
+                    "Type": "string"
+                },
+                {
+                    "Name": "passenger_count",
+                    "Type": "bigint"
+                },
+                {
+                    "Name": "trip_distance",
+                    "Type": "double"
+                },
+                {
+                    "Name": "pickup_longitude",
+                    "Type": "double"
+                },
+                {
+                    "Name": "pickup_latitude",
+                    "Type": "double"
+                },
+                {
+                    "Name": "ratecodeid",
+                    "Type": "bigint"
+                },
+                {
+                    "Name": "store_and_fwd_flag",
+                    "Type": "string"
+                },
+                {
+                    "Name": "dropoff_longitude",
+                    "Type": "double"
+                },
+                {
+                    "Name": "dropoff_latitude",
+                    "Type": "double"
+                },
+                {
+                    "Name": "payment_type",
+                    "Type": "bigint"
+                },
+                {
+                    "Name": "fare_amount",
+                    "Type": "double"
+                },
+                {
+                    "Name": "extra",
+                    "Type": "double"
+                },
+                {
+                    "Name": "mta_tax",
+                    "Type": "double"
+                },
+                {
+                    "Name": "tip_amount",
+                    "Type": "double"
+                },
+                {
+                    "Name": "tolls_amount",
+                    "Type": "double"
+                },
+                {
+                    "Name": "improvement_surcharge",
+                    "Type": "double"
+                },
+                {
+                    "Name": "total_amount",
+                    "Type": "double"
+                }
+            ],
+            "Location": "s3://nyc-tlc/trip data/yellow_tripdata_2015-01.csv",
+            "InputFormat": "org.apache.hadoop.mapred.TextInputFormat",
+            "OutputFormat": "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat",
+            "Compressed": false,
+            "NumberOfBuckets": -1,
+            "SerdeInfo": {
+                "SerializationLibrary": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
+                "Parameters": {
+                    "field.delim": ","
+                }
+            },
+            "BucketColumns": [],
+            "SortColumns": [],
+            "Parameters": {
+                "classification": "csv",
+                "columnsOrdered": "true",
+                "compressionType": "none",
+                "delimiter": ",",
+                "skip.header.line.count": "1",
+                "typeOfData": "file"
+            },
+            "StoredAsSubDirectories": false
+        },
+        "PartitionKeys": [],
+        "TableType": "EXTERNAL_TABLE",
+        "Parameters": {
+            "classification": "csv",
+            "columnsOrdered": "true",
+            "compressionType": "none",
+            "delimiter": ",",
+            "skip.header.line.count": "1",
+            "typeOfData": "file"
+        }
+    },
+    "SkipArchive": true
+}

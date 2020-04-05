@@ -1,0 +1,133 @@
+{
+    "DatabaseName": "green__tripdata_staging",
+    "TableInput": {
+        "Name": "staginggreen_tripdata_2015_01_csv",
+        "Description": "",
+        "Retention": 0,
+        "StorageDescriptor": {
+            "Columns": [
+                {
+                    "Name": "vendor_id",
+                    "Type": "string"
+                },
+                {
+                    "Name": "lpep_pickup_datetime",
+                    "Type": "string"
+                },
+                {
+                    "Name": "lpep_dropoff_datetime",
+                    "Type": "string"
+                },
+                {
+                    "Name": "store_and_fwd_flag",
+                    "Type": "string"
+                },
+                {
+                    "Name": "rate_code_id",
+                    "Type": "string"
+                },
+                {
+                    "Name": "pickup_longitude",
+                    "Type": "string"
+                },
+                {
+                    "Name": "pickup_latitude",
+                    "Type": "string"
+                },
+                {
+                    "Name": "dropoff_longitude",
+                    "Type": "string"
+                },
+                {
+                    "Name": "dropoff_latitude",
+                    "Type": "string"
+                },
+                {
+                    "Name": "passenger_count",
+                    "Type": "string"
+                },
+                {
+                    "Name": "trip_distance",
+                    "Type": "string"
+                },
+                {
+                    "Name": "fare_amount",
+                    "Type": "string"
+                },
+                {
+                    "Name": "extra",
+                    "Type": "string"
+                },
+                {
+                    "Name": "mta_tax",
+                    "Type": "string"
+                },
+                {
+                    "Name": "tip_amount",
+                    "Type": "string"
+                },
+                {
+                    "Name": "tolls_amount",
+                    "Type": "string"
+                },
+                {
+                    "Name": "ehail_fee",
+                    "Type": "string"
+                },
+                {
+                    "Name": "total_amount",
+                    "Type": "string"
+                },
+                {
+                    "Name": "payment_type",
+                    "Type": "string"
+                },
+                {
+                    "Name": "trip_type",
+                    "Type": "string"
+                },
+                {
+                    "Name": "junk1",
+                    "Type": "string"
+                },
+                {
+                    "Name": "junk2",
+                    "Type": "string"
+                }
+            ],
+            "Location": "s3://nyc-tlc/trip data/green_tripdata_2015-01.csv",
+            "InputFormat": "org.apache.hadoop.mapred.TextInputFormat",
+            "OutputFormat": "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat",
+            "Compressed": false,
+            "NumberOfBuckets": -1,
+            "SerdeInfo": {
+                "SerializationLibrary": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
+                "Parameters": {
+                    "field.delim": ","
+                }
+            },
+            "BucketColumns": [],
+            "SortColumns": [],
+            "Parameters": {
+                "classification": "csv",
+                "columnsOrdered": "true",
+                "compressionType": "none",
+                "delimiter": ",",
+                "skip.header.line.count": "1",
+                "typeOfData": "file"
+            },
+            "StoredAsSubDirectories": false
+        },
+        "PartitionKeys": [],
+        "TableType": "EXTERNAL_TABLE",
+        "Parameters": {
+            "classification": "csv",
+            "columnsOrdered": "true",
+            "compressionType": "none",
+            "delimiter": ",",
+            "skip.header.line.count": "1",
+            "typeOfData": "file"
+        }
+    },
+    "SkipArchive": true
+}

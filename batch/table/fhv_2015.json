@@ -1,0 +1,57 @@
+{
+    "DatabaseName": "green__tripdata_staging",
+    "TableInput": {
+        "Name": "stagingfhv_tripdata_2015_01_csv",
+        "Description": "",
+        "Retention": 0,
+        "StorageDescriptor": {
+            "Columns": [
+                {
+                    "Name": "dispatching_base_num",
+                    "Type": "string"
+                },
+                {
+                    "Name": "pickup_date",
+                    "Type": "string"
+                },
+                {
+                    "Name": "locationid",
+                    "Type": "string"
+                }
+            ],
+            "Location": "s3://nyc-tlc/trip data/fhv_tripdata_2015-01.csv",
+            "InputFormat": "org.apache.hadoop.mapred.TextInputFormat",
+            "OutputFormat": "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat",
+            "Compressed": false,
+            "NumberOfBuckets": -1,
+            "SerdeInfo": {
+                "SerializationLibrary": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
+                "Parameters": {
+                    "field.delim": ","
+                }
+            },
+            "BucketColumns": [],
+            "SortColumns": [],
+            "Parameters": {
+                "classification": "csv",
+                "columnsOrdered": "true",
+                "compressionType": "none",
+                "delimiter": ",",
+                "skip.header.line.count": "1",
+                "typeOfData": "file"
+            },
+            "StoredAsSubDirectories": false
+        },
+        "PartitionKeys": [],
+        "TableType": "EXTERNAL_TABLE",
+        "Parameters": {
+            "classification": "csv",
+            "columnsOrdered": "true",
+            "compressionType": "none",
+            "delimiter": ",",
+            "skip.header.line.count": "1",
+            "typeOfData": "file"
+        }
+    },
+    "SkipArchive": true
+}

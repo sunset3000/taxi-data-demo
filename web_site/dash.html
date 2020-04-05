@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Trip Data Real-Time Dashboard</title>
+
+    <!-- Bootstrap -->
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+
+
+    <!-- Custom Theme Style-->
+    <link href="css/custom.css" rel="stylesheet">
+</head>
+
+<!--<body class="nav-md">-->
+
+<body>
+    <div class="container body">
+        <div class="main_container">
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" color="black" href="#">AWS CloudTrail Dashboard</a>
+                </div>
+
+                <div class="navbar-collapse collapse navbar-right" id="navbar-main">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="#" id="configureLink" data-toggle="modal" data-target="#cognitoModal" data-backdrop="static" data-keyboard="false">
+                                <i class="fa fa-cog"></i> Configure</a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="help.html">
+                                <i class="fa fa-question-circle"></i> Help</a>
+                        </li>
+                        <li>
+                            <a id="signInSpinner" class="hidden">
+                                <i class="fa fa-spinner fa-spin"></i> Signing In</a>
+                        </li>
+
+                        <li>
+                            <a id="logoutLink" class="hidden" href="#">
+                                <i class="fa fa-sign-out"></i> Log Out</a>
+                        </li>
+
+                    </ul>
+                    <form class="navbar-form navbar-right" role="search" id="loginForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="userName" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="password" placeholder="Password">
+                        </div>
+                        <button type="button" class="btn btn-default" id="btnLogin">Sign In</button>
+                    </form>
+                </div>
+
+            </nav>
+
+
+            <div class="jumbotron" id="unauthMessage" style="padding-top: 100px">
+                <div class="container">
+                    <h1>Trip Data Real-Time Dashboard</h1>
+                    <p> Sign in to get started. This dashboard uses Amazon Cognito for authentication. See
+                        <a href="help.html" target="_blank">help</a> for more information.</p>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            <div class="modal fade" id="cognitoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="configurationModalLabel">Configuration</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-danger hidden" id="configErr">
+                                The Dashboard is not configured correctly. Please ensure these values are set and are accurate.
+                            </div>
+
+                            <p>
+                                These values are used by the Dashboard to validate users in your Cognito User Pool. Don't change these values unless you
+                                know what you're doing!
+                            </p>
+                            <div id="cognitoConfig">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="userPoolId">Cognito User Pool ID</label>
+                                        <input type="text" class="form-control" id="userPoolId">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="clientId">Cognito Client ID</label>
+                                        <input type="text" class="form-control" id="clientId">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="identityPoolId">Cognito Identity Pool ID</label>
+                                        <input type="text" class="form-control" id="identityPoolId">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="userPoolRegion">User Pool Region</label>
+                                        <input type="text" class="form-control" id="userPoolRegion">
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancelConfiguration">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="btnSaveConfiguration">Save Changes</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- New Password Modal -->
+            <div class="modal fade" id="newPasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="newPasswordModalLabel">Create New Password</h4>
+                        </div>
+                        <div class="alert alert-danger hidden" id="newPasswordErr">
+                          <div class="hidden" id="newPasswordMatchErr">
+                            The passwords you entered do not match!
+                          </div>
+                          <div class="hidden" id="newPasswordComplexityErr">
+                            The password you entered does not meet the following complexity requirements:
+                            <ul>
+                              <li id="newPasswordLengthErr" class="hidden">8 or more characters</li>
+                              <li id="newPasswordUpperErr" class="hidden">Upper case character</li>
+                              <li id="newPasswordLowerErr" class="hidden">Lower case character</li>
+                              <li id="newPasswordNumberErr" class="hidden">Number</li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                Your temporary password must be changed! Please create a new password (8 or more characters, one of which must be
+                                uppercase, lowercase, and a number).
+                            </p>
+                            <div id="newPasswordConfig">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="newPassword">Enter new password:</label>
+                                        <input type="password" class="form-control" id="newPassword">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="newPassword2">Reenter password:</label>
+                                        <input type="password" class="form-control" id="newPassword2">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="btnSavePassword">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End New Password Modal -->
+            <!-- page content -->
+            <div class="right_col hidden" id="analyst_view">
+                <h3>This is Analyst View</h3>
+            </div>
+            <div class="right_col hidden" id="driver_view">
+                <h3>This is Driver View</h3>
+            </div>
+            <div class="right_col hidden" id="dashboard_content" role="main">
+            <div class="container">
+            <div class="jumbotron">
+
+            <p>
+              For more information, including processing and delivery times, please see <a href="help.html" target="_blank">help</a>.
+            </p>
+          </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Chart.js -->
+    <!-- script src="3p/Chart.js/dist/Chart.min.js"></script -->
+    <script src="js/Chart.js"></script>
+
+
+    <script type="text/javascript" src="https://sdk.amazonaws.com/js/aws-sdk-2.651.0.min.js"></script>"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <!--<script src="js/custom.js"></script>-->
+    <script src="js/dash.js"></script>
+    <script src="js/aws-cognito-sdk.min.js"></script>
+    <script src="js/amazon-cognito-identity.min.js"></script>
+    <script type="text/javascript">
+        window.onload = init;
+    </script>
+</body>
+
+</html>
