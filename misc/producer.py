@@ -3,6 +3,8 @@ import boto3
 import botocore.config
 import uuid
 
+sns_arn = "arn:aws:sns:us-east-1:67789:logprocess"
+client = boto3.client('s3')
 
 def lambda_handler(event, context):
     # TODO implement

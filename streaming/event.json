@@ -1,51 +1,27 @@
 {
-  "vendorid": {{random.number(2)}},
   "tpep_pickup_datetime": "{{date.utc("YYYY-MM-DD HH:mm:ss")}}",
   "tpep_dropoff_datetime": "{{date.utc("YYYY-MM-DD HH:mm:ss")}}",
   "passenger_count": {{random.number(4)}},
-  "trip_distance": {{random.float({ min: 0.5, max: 20 })}},
-  "pickup_longitude": {{random.float({ min: 40.34567, max: 40.34568 })}},
-  "pickup_latitude": {{random.float({ min: -78.34567, max: -78.34568 })}},
-  "dropoff_longitude": {{random.float({ min: 40.34567, max: 40.34568 })}},
-  "dropoff_latitude": {{random.float({ min: -78.34567, max: -78.34568 })}},
+  "trip_distance": {{random.number({"min": 2, "max": 50, "precision": 0.1})}},
+  "pickup_longitude": {{random.number({"min": -74.001, "max": -73.905, "precision": 0.000001})}},
+  "pickup_latitude": {{random.number({"min": 40.707, "max": 40.785, "precision": 0.000001})}},
+  "dropoff_longitude": {{random.number({"min": -74.001, "max": -73.905, "precision": 0.000001})}},
+  "dropoff_latitude": {{random.number({"min": 40.707, "max": 40.785, "precision": 0.000001})}},
   "store_and_fwd_flag": "Y",
-  "trip_distance": {{random.float({ min: 0.5, max: 20 })}},
-  "ratecodeid": 2,
-   "payment_type": 1,
-   "fare_amount": 0.1,
-   "tip_amount": 0.2,
-   "extra": 0.5,
-   "tip_amount": 0.4,
-   "tolls_amount": 3.2,
-   "improvement_surcharge": 0.8,
-   "total_amount": {{random.float({ min: 5.0, max: 100 })}},
-  "cab_type": {{random.weightedArrayElement(
-    {"weights":[0.1, 0.2, 0.7],"data":["green", "yellow", "fhv"]}
-  )}}
-}
-{
-  "vendorid": {{random.number(2)}},
-  "tpep_pickup_datetime": "{{date.utc("YYYY-MM-DD HH:mm:ss")}}",
-  "tpep_dropoff_datetime": "{{date.utc("YYYY-MM-DD HH:mm:ss")}}",
-  "passenger_count": {{random.number(4)}},
-  "trip_distance": 2.0,
-  "deviceid": {{random.number(1000)}},
-  "pickup_longitude": 40.34567,
-  "pickup_latitude": -78.34567,
-  "dropoff_longitude": 40.34568,
-  "dropoff_latitude": -78.34568,
-  "store_and_fwd_flag": "Y",
-  "trip_distance": 5.5,
   "ratecodeid": 2,
   "payment_type": 1,
-   "fare_amount": 0.1,
+   "fare_amount": {{random.number(
+    {"min": 1, "max": 5, "precision": 0.01}
+   )}},
    "tip_amount": 0.2,
    "extra": 0.5,
-   "tip_amount": 0.4,
    "tolls_amount": 3.2,
    "improvement_surcharge": 0.8,
-   "total_amount": 5.5,
+   "total_amount":  {{random.number({"min": 1, "max": 100, "precision": 0.01})}},
    "cab_type": {{random.weightedArrayElement(
-    {"weights":[0.1, 0.2, 0.7],"data":["green", "yellow", "fhv"]}
-  )}}
+    {"weights":[0.1, 0.2, 0.7],"data":["\"green\"", "\"yellow\"", "\"fhv\""]}
+  )}},
+    "trip_type": 1,
+    "pickup_location_id": {{random.number({"min": 1, "max": 186})}},
+    "dropoff_location_id": {{random.number({"min": 1, "max": 186})}}
 }

@@ -1,0 +1,145 @@
+{
+    "ApplicationDetail": {
+        "ApplicationName": "10min_stat",
+        "ApplicationARN": "arn:aws:kinesisanalytics:us-east-1:215217274984:application/10min_stat",
+        "InputDescriptions": [
+            {
+                "InputId": "2.1",
+                "NamePrefix": "SOURCE_SQL_STREAM",
+                "InAppStreamNames": [
+                    "SOURCE_SQL_STREAM_001"
+                ],
+                "KinesisFirehoseInputDescription": {
+                    "ResourceARN": "arn:aws:firehose:us-east-1:215217274984:deliverystream/input-trip-stream",
+                    "RoleARN": "arn:aws:iam::215217274984:role/service-role/kinesis-analytics-10min_stat-us-east-1"
+                },
+                "InputSchema": {
+                    "RecordFormat": {
+                        "RecordFormatType": "JSON",
+                        "MappingParameters": {
+                            "JSONMappingParameters": {
+                                "RecordRowPath": "$"
+                            }
+                        }
+                    },
+                    "RecordEncoding": "UTF-8",
+                    "RecordColumns": [
+                        {
+                            "Name": "tpep_pickup_datetime",
+                            "Mapping": "$.tpep_pickup_datetime",
+                            "SqlType": "TIMESTAMP"
+                        },
+                        {
+                            "Name": "tpep_dropoff_datetime",
+                            "Mapping": "$.tpep_dropoff_datetime",
+                            "SqlType": "TIMESTAMP"
+                        },
+                        {
+                            "Name": "passenger_count",
+                            "Mapping": "$.passenger_count",
+                            "SqlType": "INTEGER"
+                        },
+                        {
+                            "Name": "trip_distance",
+                            "Mapping": "$.trip_distance",
+                            "SqlType": "DOUBLE"
+                        },
+                        {
+                            "Name": "pickup_longitude",
+                            "Mapping": "$.pickup_longitude",
+                            "SqlType": "DOUBLE"
+                        },
+                        {
+                            "Name": "pickup_latitude",
+                            "Mapping": "$.pickup_latitude",
+                            "SqlType": "DOUBLE"
+                        },
+                        {
+                            "Name": "dropoff_longitude",
+                            "Mapping": "$.dropoff_longitude",
+                            "SqlType": "DOUBLE"
+                        },
+                        {
+                            "Name": "dropoff_latitude",
+                            "Mapping": "$.dropoff_latitude",
+                            "SqlType": "DOUBLE"
+                        },
+                        {
+                            "Name": "store_and_fwd_flag",
+                            "Mapping": "$.store_and_fwd_flag",
+                            "SqlType": "VARCHAR(4)"
+                        },
+                        {
+                            "Name": "ratecodeid",
+                            "Mapping": "$.ratecodeid",
+                            "SqlType": "INTEGER"
+                        },
+                        {
+                            "Name": "payment_type",
+                            "Mapping": "$.payment_type",
+                            "SqlType": "INTEGER"
+                        },
+                        {
+                            "Name": "fare_amount",
+                            "Mapping": "$.fare_amount",
+                            "SqlType": "DOUBLE"
+                        },
+                        {
+                            "Name": "tip_amount",
+                            "Mapping": "$.tip_amount",
+                            "SqlType": "DECIMAL(1,1)"
+                        },
+                        {
+                            "Name": "extra",
+                            "Mapping": "$.extra",
+                            "SqlType": "DECIMAL(1,1)"
+                        },
+                        {
+                            "Name": "tolls_amount",
+                            "Mapping": "$.tolls_amount",
+                            "SqlType": "DECIMAL(1,1)"
+                        },
+                        {
+                            "Name": "improvement_surcharge",
+                            "Mapping": "$.improvement_surcharge",
+                            "SqlType": "DECIMAL(1,1)"
+                        },
+                        {
+                            "Name": "total_amount",
+                            "Mapping": "$.total_amount",
+                            "SqlType": "REAL"
+                        },
+                        {
+                            "Name": "cab_type",
+                            "Mapping": "$.cab_type",
+                            "SqlType": "VARCHAR(8)"
+                        },
+                        {
+                            "Name": "trip_type",
+                            "Mapping": "$.trip_type",
+                            "SqlType": "INTEGER"
+                        },
+                        {
+                            "Name": "pickup_location_id",
+                            "Mapping": "$.pickup_location_id",
+                            "SqlType": "INTEGER"
+                        },
+                        {
+                            "Name": "dropoff_location_id",
+                            "Mapping": "$.dropoff_location_id",
+                            "SqlType": "INTEGER"
+                        }
+                    ]
+                },
+                "InputParallelism": {
+                    "Count": 1
+                },
+                "InputStartingPositionConfiguration": {
+                    "InputStartingPosition": "NOW"
+                }
+            }
+        ],
+        "ApplicationCode": "CREATE OR REPLACE STREAM \"DESTINATION_SQL_STREAM\" (\r\n  \"cab_type\" VARCHAR(64),\r\n  \"tpep_pickup_datetime\" TIMESTAMP,\r\n  \"pickup_location_id\" INT,\r\n  \"trips\" INT\r\n);\r\n\r\nCREATE OR REPLACE PUMP \"STREAM_PUMP\" AS\r\n  INSERT INTO \"DESTINATION_SQL_STREAM\"\r\n    SELECT STREAM\r\n        \"cab_type\",\r\n        FlOOR(\"tpep_pickup_datetime\" TO MINUTE),\r\n        \"pickup_location_id\",\r\n        COUNT(*) AS trips\r\n    FROM \"SOURCE_SQL_STREAM_001\"\r\n    WINDOWED BY STAGGER (\r\n            PARTITION BY \"cab_type\",  FlOOR(\"tpep_pickup_datetime\" TO MINUTE), \"pickup_location_id\" RANGE INTERVAL '1' MINUTE);\n",
+        "ApplicationVersionId": 4
+    }
+}

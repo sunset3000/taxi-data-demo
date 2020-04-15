@@ -7,19 +7,31 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
 
     <title>Trip Data Real-Time Dashboard</title>
 
     <!-- Bootstrap -->
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap datepicker -->
+    <!-- <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet"> -->
+    <link href="https://cdn.bootcss.com/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/fontawesome.min.css" rel="stylesheet">
 
 
     <!-- Custom Theme Style-->
     <link href="css/custom.css" rel="stylesheet">
+    <style>
+        #nearby_map {
+          position: relative;
+          height: 800px;
+          width: 100%;
+        }
+    </style>
 </head>
 
 <!--<body class="nav-md">-->
@@ -71,8 +83,6 @@
                 </div>
 
             </nav>
-
-
             <div class="jumbotron" id="unauthMessage" style="padding-top: 100px">
                 <div class="container">
                     <h1>Trip Data Real-Time Dashboard</h1>
@@ -180,36 +190,142 @@
             <!-- End New Password Modal -->
             <!-- page content -->
             <div class="right_col hidden" id="analyst_view">
-                <h3>This is Analyst View</h3>
+                <div class="navbar-form">
+                    <div class="form-group input-daterange input-group">
+                        <input type="text" class="form-control" id="start" placeholder="Start Time">
+                        <span class="input-group-addon">To</span>
+                        <input type="text" class="form-control" id="end" placeholder="End Time">
+                    </div>
+                    <button type="button" class="btn btn-default" id="btnQuery">Query</button>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 col-md-offset-1 col-xs-12 aws-mb-l">
+                        <div class="x_title">
+                            <h3>Trips Per Month
+                              <small>Over the last hour</small></h3>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div id="trips_per_month1"></div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-xs-12">
+                        <div class="x_title">
+                            <div>
+                                <h3>Trips Per Location
+                                    <small>Over the last hour</small>
+                                </h3>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div id="tripsPerLocation1"></div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right_col hidden" id="ops_view">
+                <div class="row aws-pt-s">
+                    <div class="col-md-10 col-xs-offset-1">
+                        <div class="x_title">
+                            <h3>Trips Trends
+                              <small>Over the last hour</small></h3>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="col-md-10 tile_stats_count text-center aws-mb-l">
+                            <div class="count_top" id="trend_chart">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 col-md-offset-1 col-xs-12 aws-mb-l">
+                        <div class="x_title">
+                            <h3>Trips Per Month
+                              <small>Over the last hour</small></h3>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div id="trips_per_month"></div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-xs-12">
+                        <div class="x_title">
+                            <div>
+                                <h3>Trips Per Location
+                                    <small>Over the last hour</small>
+                                </h3>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div id="tripsPerLocation"></div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="right_col hidden" id="driver_view">
-                <h3>This is Driver View</h3>
-            </div>
-            <div class="right_col hidden" id="dashboard_content" role="main">
-            <div class="container">
-            <div class="jumbotron">
 
-            <p>
-              For more information, including processing and delivery times, please see <a href="help.html" target="_blank">help</a>.
-            </p>
-          </div>
-        </div>
-    </div>
+            <!-- <div id="driver_view"> -->
+                <div class="navbar-form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="lon" placeholder="longitude">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="lat" placeholder="latitude">
+                    </div>
+                    <button type="button" class="btn btn-default" id="btnLocate">Locate</button>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="x_title">
+                            <h3>Nearby Trips distribution
+                              <small>Over the last 10 mins</small></h3>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div>
+                            <div id="nearby_map"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <!-- Bootstrap -->
-    <script src="js/bootstrap.min.js"></script>
-    <!-- Chart.js -->
-    <!-- script src="3p/Chart.js/dist/Chart.min.js"></script -->
-    <script src="js/Chart.js"></script>
+    <!-- <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- baidu mapgl v3-->
+    <script type="text/javascript" src="https://api.map.baidu.com/api?type=webgl&v=1.0&ak=E4805d16520de693a3fe707cdc962045"></script>
+    <script src="https://unpkg.com/mapvgl/dist/mapvgl.min.js"></script>
+
+    <!-- <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=E4805d16520de693a3fe707cdc962045"></script>
+    <script type="text/javascript" src="https://mapv.baidu.com/build/mapv.js"></script> -->
+
+    <!-- highcharts -->
+    <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
 
 
-    <script type="text/javascript" src="https://sdk.amazonaws.com/js/aws-sdk-2.651.0.min.js"></script>"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://sdk.amazonaws.com/js/aws-sdk-2.651.0.min.js"></script>">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script> -->
+
+    <!-- Bootstrap datepicker dep -->
+    <script src="https://cdn.bootcss.com/moment.js/2.22.1/moment-with-locales.min.js"></script>
+
+    <!-- Bootstrap datepicker -->
+    <!-- <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script> -->
+    <script src="https://cdn.bootcss.com/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
 
     <!-- Custom Theme Scripts -->
     <!--<script src="js/custom.js"></script>-->
+    <script src="js/data.js"></script>
     <script src="js/dash.js"></script>
     <script src="js/aws-cognito-sdk.min.js"></script>
     <script src="js/amazon-cognito-identity.min.js"></script>

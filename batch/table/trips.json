@@ -1,0 +1,126 @@
+{
+    "DatabaseName": "green__tripdata_staging",
+    "Table": {
+        "Name": "trips",
+        "DatabaseName": "green__tripdata_staging",
+        "Owner": "owner",
+        "Retention": 0,
+        "StorageDescriptor": {
+            "Columns": [
+                {
+                    "Name": "extra",
+                    "Type": "double"
+                },
+                {
+                    "Name": "tpep_dropoff_datetime",
+                    "Type": "timestamp"
+                },
+                {
+                    "Name": "trip_distance",
+                    "Type": "double"
+                },
+                {
+                    "Name": "mta_tax",
+                    "Type": "double"
+                },
+                {
+                    "Name": "pickup_latitude",
+                    "Type": "double"
+                },
+                {
+                    "Name": "pickup_longitude",
+                    "Type": "double"
+                },
+                {
+                    "Name": "dropoff_longitude",
+                    "Type": "double"
+                },
+                {
+                    "Name": "total_amount",
+                    "Type": "double"
+                },
+                {
+                    "Name": "payment_type",
+                    "Type": "tinyint"
+                },
+                {
+                    "Name": "fare_amount",
+                    "Type": "double"
+                },
+                {
+                    "Name": "tpep_pickup_datetime",
+                    "Type": "timestamp"
+                },
+                {
+                    "Name": "dropoff_latitude",
+                    "Type": "double"
+                },
+                {
+                    "Name": "tip_amount",
+                    "Type": "double"
+                },
+                {
+                    "Name": "tolls_amount",
+                    "Type": "double"
+                },
+                {
+                    "Name": "trip_type",
+                    "Type": "tinyint"
+                },
+                {
+                    "Name": "store_and_fwd_flag",
+                    "Type": "string"
+                },
+                {
+                    "Name": "passenger_count",
+                    "Type": "int"
+                },
+                {
+                    "Name": "cab_type",
+                    "Type": "string"
+                },
+                {
+                    "Name": "pickup_location_id",
+                    "Type": "tinyint"
+                },
+                {
+                    "Name": "dropoff_location_id",
+                    "Type": "tinyint"
+                }
+            ],
+            "Location": "s3://taxi-data-etl/staging/",
+            "InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+            "OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+            "Compressed": false,
+            "NumberOfBuckets": -1,
+            "SerdeInfo": {
+                "SerializationLibrary": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
+                "Parameters": {
+                    "serialization.format": "1"
+                }
+            },
+            "BucketColumns": [],
+            "SortColumns": [],
+            "Parameters": {
+                "classification": "parquet",
+                "compressionType": "none",
+                "typeOfData": "file"
+            },
+            "StoredAsSubDirectories": false
+        },
+        "PartitionKeys": [
+            {
+                "Name": "partition_0",
+                "Type": "string"
+            }
+        ],
+        "TableType": "EXTERNAL_TABLE",
+        "Parameters": {
+            "classification": "parquet",
+            "compressionType": "none",
+            "exclusions": "[\"s3://taxi-data-etl/staging/daily/**\"]",
+            "typeOfData": "file"
+        },
+        "IsRegisteredWithLakeFormation": false
+    }
+}

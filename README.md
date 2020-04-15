@@ -24,20 +24,20 @@ However as I am not familiar with Data Analytics and only have some time at nigh
    As the total size of all these trip events is over 290G. For demo purpose, I only load trip events of Jan, 2015 to save the time of processing data.
 2. A lambda function to trigger the ETL jobs when new data file is ready.
 3. Web Dashboard (10%): integration with Amazon Cognito and display different dashboards for different groups.
+4. the Kinesis Data Analytics Application in stream folder.
+5. the lambda function to execute query against Athena which will can called by javascript in dashboard to display charts.
+6. Implement the lambda function trigger by output deliver stream of Kinesis Firehose to put the 10 min stats and 10 min raw trip events in Amazon ElasticCache~~
+7. Implement the lambda function to get the nearby (10 min drive distance) trip events for Amazon ElasticCache
 
 
 ## To Do
-1. Complete the Kinesis Data Analytics Application in stream folder.
-2. Complete the lambda function to execute query against Athena which will can called by javascript in dashboard to display charts.
-3. Implement the lambda function trigger by output deliver stream of Kinesis Firehose to put the 10 min stats and 10 min raw trip events in Amazon ElasticCache
-4. Implement the lambda function to get the nearby (10 min drive distance) trip events for Amazon ElasticCache
 5. Implement api calls in .js file of Web UI to call the lambda api to query Athena
 6. Implement the charts in dashboard using HighCharts.js  
 7. Complete the CloudFormation template to deploy the whole stack automatically.
 8. Train a model to predict the number of trips in a location at peak hour using Amazon Machine Learning.
 
 ## Deploy to AWS
-1. Create S3 bucket '' for storing the trip events after ETL.
+1. Create S3 bucket 'taxi-data-etl' for storing the trip events after ETL.
 2. Create necessary roles in IAM for Glue Jobs, Glue Crawlers to access S3 Buckets.
 3. Create tables in Glue Catalog regarding the definitions in batch/table/*.json
 4. Create Glue Jobs with the python scripts in batch/job/*.py using the IAM role created before.
