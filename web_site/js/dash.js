@@ -89,7 +89,8 @@ ORDER BY  cab_type, tpep_pickup_datetime, trips`;
             alternateGridColor: null
         },
         tooltip: {
-              xDateFormat: '%Y-%m-%d'
+            split: true,
+            xDateFormat: '%Y-%m-%d'
         },
         plotOptions: {
             spline: {
@@ -160,6 +161,7 @@ ORDER BY  cab_type, tpep_pickup_datetime, trips`;
             shadow: false
         },
         tooltip: {
+            split: true,
             formatter: function () {
                 return '<b>' + this.x + '</b><br/>' +
                     this.series.name + ': ' + this.y + '<br/>' +
@@ -471,7 +473,7 @@ ORDER BY  cab_type, tpep_pickup_datetime, trips`;
                 showDriverView();
                 jobs.push(setInterval( function() {
                     updateNearBy();
-                }, 60*1000));
+                }, 30*1000));
                 break;
             default:
                 console.log("Error group is invalid: " + group);
@@ -501,6 +503,7 @@ ORDER BY  cab_type, tpep_pickup_datetime, trips`;
                     }
                 },
                 tooltip: {
+                    split: true,
                     dateTimeLabelFormats: {
                         millisecond: '%H:%M:%S.%L',
                         second: '%H:%M:%S',
